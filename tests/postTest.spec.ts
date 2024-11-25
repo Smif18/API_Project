@@ -15,7 +15,7 @@ test.describe('Post Page', () => {
         const response = await post.createPost(title, content);
 
 
-        
+        expect(response.status()).toBe(201);
         expect(response).toHaveProperty('id');
         expect(response).toHaveProperty('date');
         const iso8601Regex = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}$/;
@@ -25,12 +25,7 @@ test.describe('Post Page', () => {
         expect(response).toHaveProperty('content');
         expect(response).toHaveProperty('author');
         expect(response).toHaveProperty('format');
-        //expect(response.author.id).toBe(1);
-        //expect(response.author.name).toBe('Admin');
 
-        
-        //expect(response.id).not.toBeNull();
-        //expect(response.id).not.toBe('');
 
         if (response.id === null || response.id === '') {
             console.log('Ошибка: id не может быть пустым или null');
@@ -56,11 +51,15 @@ test.describe('Post Page', () => {
         expect(response.title).not.toBeNull();
         expect(response.title.raw).toBe(title);
         expect(response.author).toBe(1);
+        expect(response.format).toBe('standard');
+        expect(response.content.protected).toBe(false);
+        
 
         
         expect(typeof response.id).toBe('number');
         expect(typeof response.date).toBe('string');
         expect(typeof response.sticky).toBe('boolean');
+        
      
         //expect(response.slug).toMatch(/^[a-z0-9-]+$/); 
         //expect(new Date(response.date).toISOString()).toBe(response.date); 
